@@ -148,15 +148,41 @@ export function parseProfileMarkdown(markdown: string): ParsedProfile {
   const country = matchValue(plain, [/(?:pa[ií]s|country)\s*:?\s*([^\n]+)/i]) ?? location;
 
   /* ------------------------------- Skills -------------------------------- */
-  const skillsSection = findSection(sections, [
-    /^(skills|habilidades|tecnolog[ií]as|competencias|stack)/i,
-  ]);
-  const declaredSkills = skillsSection
-    ? bulletList(skillsSection.body)
-        .flatMap((line) => line.split(/[,;|/]/))
-        .map((skill) => skill.trim().toLowerCase())
-        .filter((skill) => skill.length > 1 && skill.length <= 40)
-    : [];
+  const SKILL_TITLES = [/^(skills|habilidades|tecnolog[ií]as|competencias|stack)/i];
+  const skillsSection = findSection(sections, SKILL_TITLES);
+
+  /**
+   * Muchos perfiles agrupan las tecnologias en subsecciones
+   * ("## Skills" → "### Bases de datos", "### Desarrollo"). Se toman los items
+   * de la seccion y de todas sus subsecciones, no solo del cuerpo directo.
+   */
+  const skillBodies: string[] = [];
+  const skillsIndex = sections.findIndex((section) =>
+    SKILL_TITLES.some((pattern) => pattern.test(section.title)),
+  );
+  if (skillsIndex >= 0) {
+    const parentLevel = sections[skillsIndex].level;
+    skillBodies.push(sections[skillsIndex].body);
+    for (let i = skillsIndex + 1; i < sections.length; i += 1) {
+      if (sections[i].level <= parentLevel) break;
+      skillBodies.push(sections[i].body);
+    }
+  } else if (skillsSection) {
+    skillBodies.push(skillsSection.body);
+  }
+
+  const declaredSkills = skillBodies
+    .flatMap((body) => bulletList(body))
+    .flatMap((line) => line.split(/[,;|/]/))
+    .map((skill) => skill.trim().toLowerCase())
+    .filter(
+      (skill) =>
+        skill.length > 1 &&
+        skill.length <= 40 &&
+        // "SQL Server 2008 / 2012 / 2014" deja fragmentos que son solo versiones:
+        // no son tecnologias y ensucian el matching.
+        !/^[\d\s.,r]+$/i.test(skill),
+    );
 
   const detected = new Set(declaredSkills);
   for (const skill of SKILL_DICTIONARY) {
