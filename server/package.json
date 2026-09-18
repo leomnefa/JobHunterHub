@@ -1,0 +1,11 @@
+{
+  "name": "@jobhunterhub/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Backend de JobHunterHub. Sin dependencias externas: Node 22.6+ ejecuta TypeScript de forma nativa y node:sqlite provee la base de datos.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node src/index.ts"
+  }
+}

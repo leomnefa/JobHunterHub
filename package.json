@@ -1,0 +1,17 @@
+{
+  "name": "jobhunterhub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JobHunter AI - Motor unificado de busqueda, analisis y postulacion laboral",
+  "type": "module",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "start": "node server/src/index.ts",
+    "dev": "node scripts/dev.mjs",
+    "build:web": "npm --prefix web run build",
+    "test": "node --test server/test/*.test.ts"
+  }
+}

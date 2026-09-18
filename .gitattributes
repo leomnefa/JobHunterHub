@@ -1,0 +1,11 @@
+# Normaliza los finales de linea en el repositorio.
+* text=auto eol=lf
+
+# Los scripts de Windows necesitan CRLF para ejecutarse correctamente.
+*.bat text eol=crlf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary

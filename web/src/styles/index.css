@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/*
+  Sistema visual de JobHunter AI.
+  Tokens en :root para tema claro y .dark para oscuro; todo el resto de la
+  aplicacion consume estos tokens y nunca colores sueltos.
+*/
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Fira Code", monospace;
+
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #d9e6ff;
+  --color-brand-200: #bcd3ff;
+  --color-brand-300: #8eb5ff;
+  --color-brand-400: #598cff;
+  --color-brand-500: #3363f5;
+  --color-brand-600: #2145e0;
+  --color-brand-700: #1c36b5;
+  --color-brand-800: #1c3090;
+  --color-brand-900: #1c2d72;
+
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+
+  --radius-xl2: 1.25rem;
+}
+
+:root {
+  --surface: #f6f7fb;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eceff6;
+  --border-soft: #dfe3ee;
+  --text-strong: #101528;
+  --text-muted: #5b6480;
+  --ring: rgba(51, 99, 245, 0.35);
+  --shadow-card: 0 1px 2px rgba(16, 21, 40, 0.05), 0 12px 32px -16px rgba(16, 21, 40, 0.25);
+  color-scheme: light;
+}
+
+.dark {
+  --surface: #080b16;
+  --surface-raised: #111629;
+  --surface-sunken: #0c1120;
+  --border-soft: #222a42;
+  --text-strong: #eef1fa;
+  --text-muted: #98a2c0;
+  --ring: rgba(89, 140, 255, 0.45);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 20px 48px -24px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--border-soft);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text-strong);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fondo ambiental sutil: dos halos que dan profundidad sin distraer. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, rgba(51, 99, 245, 0.14), transparent 60%),
+    radial-gradient(48rem 32rem at 100% 0%, rgba(6, 182, 212, 0.1), transparent 55%);
+}
+
+@utility surface {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+}
+
+@utility text-muted {
+  color: var(--text-muted);
+}
+
+@utility focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Barras de scroll discretas y consistentes en los dos temas. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-muted) 30%, transparent);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-muted) 50%, transparent);
+  background-clip: content-box;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--text-muted) 12%, transparent),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+/* Render de Markdown (perfil, CV, cartas). */
+.markdown-body {
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+.markdown-body h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1.2rem 0 0.6rem;
+}
+.markdown-body h2 {
+  font-size: 1.15rem;
+  font-weight: 650;
+  margin: 1.4rem 0 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.markdown-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0 0.35rem;
+}
+.markdown-body p {
+  margin: 0.6rem 0;
+}
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0.5rem 0 0.8rem 1.25rem;
+  list-style: disc;
+}
+.markdown-body ol {
+  list-style: decimal;
+}
+.markdown-body li {
+  margin: 0.25rem 0;
+}
+.markdown-body a {
+  color: var(--color-brand-400);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.markdown-body code {
+  background: var(--surface-sunken);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.markdown-body pre {
+  background: var(--surface-sunken);
+  padding: 0.9rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 0.8rem 0;
+}
+.markdown-body blockquote {
+  border-left: 3px solid var(--color-brand-500);
+  padding-left: 0.9rem;
+  color: var(--text-muted);
+  margin: 0.8rem 0;
+}
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0;
+  font-size: 0.88rem;
+}
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--border-soft);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border-soft);
+  margin: 1.2rem 0;
+}
+
+@media print {
+  body::before {
+    display: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
