@@ -289,8 +289,13 @@ export function AdminSystemPage() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState("");
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo en la carga inicial o al cambiar de filtro. Tras una
+   * accion del usuario se refresca en silencio: reemplazar la lista por
+   * skeletons colapsa la altura de la pagina y el scroll salta al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const [executions, healthResult] = await Promise.all([
         api.get<ExecutionStats>("/api/admin/executions?limit=40"),
@@ -301,12 +306,12 @@ export function AdminSystemPage() {
     } catch (error) {
       toast.error("No se pudo cargar el estado", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -334,7 +339,7 @@ export function AdminSystemPage() {
         title="Estado del sistema"
         description="Salud de los conectores, metricas de ejecucion y mantenimiento de la base local."
         actions={
-          <Button variant="secondary" icon={<RefreshCw size={15} />} onClick={load} loading={loading}>
+          <Button variant="secondary" icon={<RefreshCw size={15} />} onClick={() => load(true)} loading={loading}>
             Actualizar
           </Button>
         }
@@ -525,8 +530,13 @@ export function AdminLogsPage() {
   const [action, setAction] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo en la carga inicial o al cambiar de filtro. Tras una
+   * accion del usuario se refresca en silencio: reemplazar la lista por
+   * skeletons colapsa la altura de la pagina y el scroll salta al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const params = new URLSearchParams({ limit: "150" });
       if (action) params.set("action", action);
@@ -538,12 +548,12 @@ export function AdminLogsPage() {
     } catch (error) {
       toast.error("No se pudieron cargar los logs", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [action]);
 

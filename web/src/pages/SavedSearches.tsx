@@ -29,20 +29,25 @@ export function SavedSearchesPage() {
   const [searches, setSearches] = useState<SavedSearch[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo en la carga inicial o al cambiar de filtro. Tras una
+   * accion del usuario se refresca en silencio: reemplazar la lista por
+   * skeletons colapsa la altura de la pagina y el scroll salta al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const result = await api.get<{ searches: SavedSearch[] }>("/api/saved-searches");
       setSearches(result.searches);
     } catch (error) {
       toast.error("No se pudieron cargar las busquedas", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -191,20 +196,25 @@ export function AlertsPage() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo en la carga inicial o al cambiar de filtro. Tras una
+   * accion del usuario se refresca en silencio: reemplazar la lista por
+   * skeletons colapsa la altura de la pagina y el scroll salta al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const result = await api.get<{ alerts: Alert[] }>("/api/alerts");
       setAlerts(result.alerts);
     } catch (error) {
       toast.error("No se pudieron cargar las alertas", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

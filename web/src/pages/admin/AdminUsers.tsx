@@ -48,20 +48,25 @@ export function AdminUsersPage() {
   const [resetFor, setResetFor] = useState<UserRow | null>(null);
   const [resetPassword, setResetPassword] = useState("");
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo en la carga inicial o al cambiar de filtro. Tras una
+   * accion del usuario se refresca en silencio: reemplazar la lista por
+   * skeletons colapsa la altura de la pagina y el scroll salta al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const result = await api.get<{ users: UserRow[] }>("/api/admin/users");
       setUsers(result.users);
     } catch (error) {
       toast.error("No se pudieron cargar los usuarios", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -93,7 +98,12 @@ export function AdminUsersPage() {
         toast.success("Usuario actualizado");
       } else {
         await api.post("/api/admin/users", { name, email, password, role, active });
-        toast.success("Usuario creado", "Debera cambiar la contrasena al ingresar.");
+        // Se repite el email en el aviso: un error de tipeo se nota al instante
+        // y no despues, cuando el login falla con un mensaje generico.
+        toast.success(
+          "Usuario creado",
+          `Debe iniciar sesion con ${email.trim().toLowerCase()} y cambiar la contrasena al ingresar.`,
+        );
       }
       setFormOpen(false);
       await load();

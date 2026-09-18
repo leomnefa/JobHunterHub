@@ -66,20 +66,25 @@ export function AdminSourcesPage() {
   const [saving, setSaving] = useState(false);
   const [syncingId, setSyncingId] = useState<string | null>(null);
 
-  const load = async () => {
-    setLoading(true);
+  /**
+   * `showSkeleton` solo se usa en la carga inicial. Tras una accion del usuario
+   * se refresca en silencio: si se reemplaza la lista por skeletons, la pagina
+   * colapsa su altura y el navegador manda el scroll al tope.
+   */
+  const load = async (showSkeleton = false) => {
+    if (showSkeleton) setLoading(true);
     try {
       const result = await api.get<{ sources: SourceView[] }>("/api/admin/sources");
       setSources(result.sources);
     } catch (error) {
       toast.error("No se pudieron cargar las fuentes", errorMessage(error));
     } finally {
-      setLoading(false);
+      if (showSkeleton) setLoading(false);
     }
   };
 
   useEffect(() => {
-    void load();
+    void load(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -106,9 +111,15 @@ export function AdminSourcesPage() {
   };
 
   const toggleEnabled = async (source: SourceView) => {
+    // Se actualiza solo la tarjeta afectada, con el estado que confirma el
+    // backend: la lista no se remonta y el scroll queda donde estaba.
     try {
-      await api.put(`/api/admin/sources/${source.id}`, { enabled: !source.enabled });
-      await load();
+      const result = await api.put<{ source: SourceView }>(`/api/admin/sources/${source.id}`, {
+        enabled: !source.enabled,
+      });
+      setSources((current) =>
+        current.map((item) => (item.id === source.id ? result.source : item)),
+      );
     } catch (error) {
       toast.error("No se pudo actualizar", errorMessage(error));
     }
@@ -124,13 +135,15 @@ export function AdminSourcesPage() {
     if (!editing) return;
     setSaving(true);
     try {
-      await api.put(`/api/admin/sources/${editing.id}`, {
+      const result = await api.put<{ source: SourceView }>(`/api/admin/sources/${editing.id}`, {
         settings: values,
         syncIntervalMinutes: interval,
       });
+      setSources((current) =>
+        current.map((item) => (item.id === editing.id ? result.source : item)),
+      );
       toast.success("Configuracion guardada");
       setEditing(null);
-      await load();
     } catch (error) {
       toast.error("No se pudo guardar", errorMessage(error));
     } finally {

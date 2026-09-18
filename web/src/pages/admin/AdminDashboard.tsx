@@ -144,7 +144,7 @@ export function AdminDashboardPage() {
         description="Estado general de la plataforma, fuentes y sincronizacion."
         actions={
           <>
-            <Button variant="secondary" icon={<RefreshCw size={15} />} onClick={load}>
+            <Button variant="secondary" icon={<RefreshCw size={15} />} onClick={() => load()}>
               Actualizar
             </Button>
             <Button icon={<RefreshCw size={15} />} loading={syncing} onClick={runSync}>
