@@ -126,6 +126,7 @@ export function PreferencesPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Configuracion"
         title="Preferencias"
         description="Estos criterios alimentan el motor de matching y las alertas automaticas."
         actions={

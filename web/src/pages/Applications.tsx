@@ -136,6 +136,7 @@ export function ApplicationsPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Seguimiento"
         title="Mis postulaciones"
         description="Historial completo con estado, documentos y trazabilidad de cada candidatura."
         actions={

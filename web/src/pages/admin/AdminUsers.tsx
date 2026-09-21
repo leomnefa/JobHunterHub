@@ -139,6 +139,7 @@ export function AdminUsersPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Administracion"
         title="Usuarios"
         description="Cada usuario tiene su propio perfil, CVs y postulaciones, completamente aislados del resto."
         actions={

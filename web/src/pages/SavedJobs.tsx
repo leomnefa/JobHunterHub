@@ -58,6 +58,7 @@ export function SavedJobsPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Base local"
         title="Ofertas guardadas"
         description={`${total} ofertas normalizadas y deduplicadas en la base local de esta PC.`}
       />

@@ -10,18 +10,19 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lg shadow-brand-600/25 hover:from-brand-400 hover:to-brand-500 disabled:from-brand-500/50 disabled:to-brand-600/50",
+    "bg-brand-500 text-white shadow-lg shadow-brand-600/25 hover:bg-brand-600 disabled:bg-brand-500/50",
   secondary:
-    "border bg-[var(--surface-raised)] text-[var(--text-strong)] hover:bg-[var(--surface-sunken)]",
+    "border bg-[var(--surface-raised)] text-[var(--text-strong)] hover:border-brand-500/50 hover:bg-brand-500/5",
   ghost: "text-[var(--text-muted)] hover:bg-black/5 hover:text-[var(--text-strong)] dark:hover:bg-white/5",
   danger: "bg-rose-600 text-white hover:bg-rose-500 shadow-lg shadow-rose-600/20",
   subtle: "bg-brand-500/12 text-brand-300 hover:bg-brand-500/20 border border-brand-500/20",
 };
 
+// Pildoras: es la forma que usan los CTA de Grupo FM.
 const BUTTON_SIZES: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-xs gap-1.5 rounded-lg",
-  md: "h-10 px-4 text-sm gap-2 rounded-xl",
-  lg: "h-12 px-6 text-sm gap-2.5 rounded-xl",
+  sm: "h-8 px-3.5 text-xs gap-1.5 rounded-full",
+  md: "h-10 px-5 text-sm gap-2 rounded-full",
+  lg: "h-11 px-7 text-sm gap-2.5 rounded-full",
 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -56,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 /* ------------------------------ Formulario ------------------------------ */
 
 const FIELD_BASE =
-  "w-full rounded-xl border bg-[var(--surface-sunken)] px-3.5 text-sm text-[var(--text-strong)] placeholder:text-[var(--text-muted)]/70 transition disabled:opacity-60";
+  "w-full rounded-xl border bg-[var(--surface-sunken)] px-3.5 text-sm text-[var(--text-strong)] placeholder:text-[var(--text-muted)]/70 transition focus:border-brand-500/50 disabled:opacity-60";
 
 export interface FieldProps {
   label?: string;
@@ -180,7 +181,15 @@ export function Card({
   padded?: boolean;
 }) {
   return (
-    <div className={cx("surface rounded-2xl", padded && "p-5", className)}>{children}</div>
+    <div
+      className={cx(
+        "surface rounded-2xl transition-colors duration-500 hover:border-brand-500/30",
+        padded && "p-5",
+        className,
+      )}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -204,7 +213,9 @@ export function CardHeader({
           </span>
         )}
         <div className="min-w-0">
-          <h2 className="truncate text-sm font-semibold text-[var(--text-strong)]">{title}</h2>
+          <h2 className="truncate text-sm font-semibold tracking-tight text-[var(--text-strong)]">
+            {title}
+          </h2>
           {subtitle && <p className="text-muted mt-0.5 text-xs">{subtitle}</p>}
         </div>
       </div>
@@ -451,7 +462,7 @@ export function StatCard({
       <div className={cx("absolute inset-0 bg-gradient-to-br", tones[tone])} />
       <div className="relative flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-muted text-[11px] font-medium tracking-wide uppercase">{label}</p>
+          <p className="eyebrow">{label}</p>
           <p className="mt-1.5 text-2xl font-semibold tabular-nums text-[var(--text-strong)]">
             {value}
           </p>

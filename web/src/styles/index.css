@@ -1,54 +1,65 @@
 @import "tailwindcss";
 
+/* Fuentes autoalojadas: la aplicacion corre local y no debe depender de una CDN. */
+@import "@fontsource-variable/inter";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/600.css";
+
 /*
-  Sistema visual de JobHunter AI.
-  Tokens en :root para tema claro y .dark para oscuro; todo el resto de la
-  aplicacion consume estos tokens y nunca colores sueltos.
+  Sistema visual de JobHunter AI, alineado a la identidad de Grupo FM:
+  indigo -> violeta sobre un gris neutro casi negro, Inter para texto y
+  JetBrains Mono para etiquetas. Los tokens viven en :root (claro) y .dark
+  (oscuro); el resto de la aplicacion nunca usa colores sueltos.
 */
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "Fira Code", monospace;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace;
 
-  --color-brand-50: #eef4ff;
-  --color-brand-100: #d9e6ff;
-  --color-brand-200: #bcd3ff;
-  --color-brand-300: #8eb5ff;
-  --color-brand-400: #598cff;
-  --color-brand-500: #3363f5;
-  --color-brand-600: #2145e0;
-  --color-brand-700: #1c36b5;
-  --color-brand-800: #1c3090;
-  --color-brand-900: #1c2d72;
+  /* Indigo de Grupo FM: hsl(239 84% 67%) = #6366f1 */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
 
-  --color-accent-400: #22d3ee;
-  --color-accent-500: #06b6d4;
-  --color-accent-600: #0891b2;
+  /* Violeta de Grupo FM: hsl(270 75% 60%) / #8b5cf6 en el favicon */
+  --color-accent-300: #c4b5fd;
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
 
-  --radius-xl2: 1.25rem;
+  --radius-xl2: 0.75rem;
 }
 
 :root {
-  --surface: #f6f7fb;
+  --surface: #f7f7f9;
   --surface-raised: #ffffff;
-  --surface-sunken: #eceff6;
-  --border-soft: #dfe3ee;
-  --text-strong: #101528;
-  --text-muted: #5b6480;
-  --ring: rgba(51, 99, 245, 0.35);
-  --shadow-card: 0 1px 2px rgba(16, 21, 40, 0.05), 0 12px 32px -16px rgba(16, 21, 40, 0.25);
+  --surface-sunken: #eeeef2;
+  --border-soft: #e2e2e8;
+  --text-strong: #0a0a0b;
+  --text-muted: #5c6472;
+  --ring: rgba(99, 102, 241, 0.35);
+  --shadow-card: 0 1px 2px rgba(10, 10, 11, 0.05), 0 12px 32px -16px rgba(10, 10, 11, 0.22);
   color-scheme: light;
 }
 
+/* Valores tomados uno a uno del index.css de Grupo FM. */
 .dark {
-  --surface: #080b16;
-  --surface-raised: #111629;
-  --surface-sunken: #0c1120;
-  --border-soft: #222a42;
-  --text-strong: #eef1fa;
-  --text-muted: #98a2c0;
-  --ring: rgba(89, 140, 255, 0.45);
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 20px 48px -24px rgba(0, 0, 0, 0.8);
+  --surface: #0a0a0b; /* hsl(240 10% 3.9%) */
+  --surface-raised: #111113; /* hsl(240 6% 7%)   */
+  --surface-sunken: #212126; /* hsl(240 5% 14%)  */
+  --border-soft: #26262d; /* hsl(240 5% 16%)  */
+  --text-strong: #ffffff;
+  --text-muted: #939fb0; /* hsl(213 14% 62%) */
+  --ring: rgba(129, 140, 248, 0.45);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 20px 48px -24px rgba(0, 0, 0, 0.9);
   color-scheme: dark;
 }
 
@@ -70,7 +81,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Fondo ambiental sutil: dos halos que dan profundidad sin distraer. */
+/* Halos de acento: el mismo recurso que usa el hero del sitio institucional. */
 body::before {
   content: "";
   position: fixed;
@@ -78,8 +89,19 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(60rem 40rem at 12% -10%, rgba(51, 99, 245, 0.14), transparent 60%),
-    radial-gradient(48rem 32rem at 100% 0%, rgba(6, 182, 212, 0.1), transparent 55%);
+    radial-gradient(38rem 38rem at 12% -8%, rgba(99, 102, 241, 0.13), transparent 62%),
+    radial-gradient(32rem 32rem at 100% 4%, rgba(139, 92, 246, 0.1), transparent 58%);
+  animation: glow-pulse 8s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @utility surface {
@@ -92,12 +114,37 @@ body::before {
   color: var(--text-muted);
 }
 
+/* Etiqueta en mono con tracking amplio: la firma tipografica de Grupo FM. */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brand-400);
+}
+
+/* Texto con el gradiente de marca, como el "FM" del sitio. */
+@utility brand-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--color-brand-500),
+    var(--color-accent-500)
+  );
+  background-clip: text;
+  color: transparent;
+}
+
 @utility focus-ring {
   outline: none;
   box-shadow: 0 0 0 3px var(--ring);
 }
 
-/* Barras de scroll discretas y consistentes en los dos temas. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.04em;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -249,6 +296,16 @@ a:focus-visible {
   border: none;
   border-top: 1px solid var(--border-soft);
   margin: 1.2rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media print {

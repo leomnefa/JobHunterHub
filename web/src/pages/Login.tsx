@@ -44,22 +44,25 @@ export function LoginPage() {
           <span className="from-brand-500 to-accent-500 grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br text-white shadow-lg shadow-brand-600/30">
             <BriefcaseBusiness size={22} />
           </span>
-          <span className="text-lg font-semibold text-[var(--text-strong)]">JobHunter AI</span>
+          <span className="text-xl font-bold tracking-tighter text-[var(--text-strong)]">
+            JobHunter <span className="brand-gradient">AI</span>
+          </span>
         </div>
 
-        <div className="max-w-lg">
-          <h1 className="text-4xl leading-tight font-semibold tracking-tight text-[var(--text-strong)]">
+        <div className="relative max-w-lg">
+          {/* Halo de acento, como el hero del sitio institucional. */}
+          <div className="bg-brand-500/10 pointer-events-none absolute -top-40 -left-24 h-[32rem] w-[32rem] rounded-full blur-[120px]" />
+          <span className="eyebrow relative mb-5 block">Plataforma de empleo</span>
+          <h1 className="relative text-4xl leading-[1.05] font-bold tracking-tighter text-[var(--text-strong)] lg:text-5xl">
             Una sola plataforma para{" "}
-            <span className="from-brand-400 to-accent-400 bg-gradient-to-r bg-clip-text text-transparent">
-              buscar, analizar y postular
-            </span>
+            <span className="brand-gradient">buscar, analizar y postular</span>
           </h1>
-          <p className="text-muted mt-4 text-sm leading-relaxed">
+          <p className="text-muted relative mt-5 text-base leading-relaxed">
             Centraliza ofertas de job boards, ATS y marketplaces freelance, las normaliza en un
             unico formato y las compara contra tu perfil profesional real.
           </p>
 
-          <div className="mt-10 space-y-4">
+          <div className="relative mt-10 space-y-4">
             {[
               {
                 icon: Zap,
@@ -102,10 +105,14 @@ export function LoginPage() {
             <span className="from-brand-500 to-accent-500 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br text-white">
               <BriefcaseBusiness size={20} />
             </span>
-            <span className="text-base font-semibold text-[var(--text-strong)]">JobHunter AI</span>
+            <span className="text-base font-bold tracking-tighter text-[var(--text-strong)]">
+              JobHunter <span className="brand-gradient">AI</span>
+            </span>
           </div>
 
-          <h2 className="text-xl font-semibold text-[var(--text-strong)]">Iniciar sesion</h2>
+          <h2 className="text-2xl font-bold tracking-tighter text-[var(--text-strong)]">
+            Iniciar sesion
+          </h2>
           <p className="text-muted mt-1 text-sm">Ingresa con tu usuario para continuar.</p>
 
           <form onSubmit={submit} className="mt-7 space-y-4">

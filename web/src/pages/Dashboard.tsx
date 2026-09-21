@@ -82,6 +82,7 @@ export function DashboardPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Panel"
         title={`Hola, ${user?.name?.split(" ")[0] ?? ""}`}
         description={
           data?.profile?.headline

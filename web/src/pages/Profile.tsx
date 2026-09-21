@@ -168,6 +168,7 @@ export function ProfilePage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Fuente de verdad"
         title="Mi perfil"
         description="Su perfil en Markdown es la unica fuente de verdad: de aca salen el matching, el CV adaptado y las respuestas."
         actions={

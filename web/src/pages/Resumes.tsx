@@ -137,6 +137,7 @@ export function ResumesPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Documentos"
         title="Mis CV"
         description="CVs adaptados y cartas generadas para cada oferta. El perfil original nunca se modifica."
         actions={

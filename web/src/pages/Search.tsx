@@ -156,6 +156,7 @@ export function SearchPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Busqueda"
         title="Buscar trabajos"
         description="Consulta en vivo todas las fuentes habilitadas, normaliza y deduplica los resultados."
         actions={

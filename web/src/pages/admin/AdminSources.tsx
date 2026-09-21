@@ -178,6 +178,7 @@ export function AdminSourcesPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Integraciones"
         title="Conectores"
         description="Cada plataforma se integra como un connector independiente. Un fallo en uno no afecta al resto."
         actions={

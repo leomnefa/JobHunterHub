@@ -73,7 +73,8 @@ interface Overview {
   scheduler: { active: boolean; running: boolean };
 }
 
-const CHART_COLORS = ["#3363f5", "#06b6d4", "#8b5cf6", "#f59e0b", "#10b981", "#ef4444", "#ec4899"];
+// Escala --chart-1..5 del sistema visual de Grupo FM.
+const CHART_COLORS = ["#6366f1", "#a05ce8", "#e08c33", "#a855f7", "#e0457b", "#818cf8", "#c4b5fd"];
 
 export function AdminDashboardPage() {
   const toast = useToast();
@@ -140,6 +141,7 @@ export function AdminDashboardPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Administracion"
         title="Panel de administracion"
         description="Estado general de la plataforma, fuentes y sincronizacion."
         actions={

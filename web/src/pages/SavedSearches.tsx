@@ -77,6 +77,7 @@ export function SavedSearchesPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="Automatizacion"
         title="Mis busquedas"
         description="Las busquedas guardadas se ejecutan automaticamente y generan alertas con las ofertas nuevas compatibles."
         actions={

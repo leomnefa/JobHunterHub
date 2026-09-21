@@ -105,10 +105,10 @@ export function Layout() {
             <BriefcaseBusiness size={20} />
           </span>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-[var(--text-strong)]">JobHunter AI</p>
-            <p className="text-muted text-[11px]">
-              {isAdmin ? "Administracion" : "Busqueda inteligente"}
+            <p className="truncate text-sm font-bold tracking-tighter text-[var(--text-strong)]">
+              JobHunter <span className="brand-gradient">AI</span>
             </p>
+            <p className="eyebrow mt-0.5">{isAdmin ? "Administracion" : "Busqueda"}</p>
           </div>
           <button
             onClick={() => setOpen(false)}
@@ -213,7 +213,9 @@ export function Layout() {
           >
             <Menu size={20} />
           </button>
-          <span className="text-sm font-semibold text-[var(--text-strong)]">JobHunter AI</span>
+          <span className="text-sm font-bold tracking-tighter text-[var(--text-strong)]">
+            JobHunter <span className="brand-gradient">AI</span>
+          </span>
         </header>
 
         <main className="mx-auto w-full max-w-[100rem] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
@@ -225,10 +227,13 @@ export function Layout() {
 }
 
 export function PageHeader({
+  eyebrow,
   title,
   description,
   actions,
 }: {
+  /** Etiqueta en mono sobre el titulo, como las secciones del sitio institucional. */
+  eyebrow?: string;
   title: string;
   description?: string;
   actions?: React.ReactNode;
@@ -236,10 +241,11 @@ export function PageHeader({
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
-        <h1 className="text-xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-2xl">
+        {eyebrow && <span className="eyebrow mb-2 block">{eyebrow}</span>}
+        <h1 className="text-2xl font-bold tracking-tighter text-[var(--text-strong)] sm:text-3xl">
           {title}
         </h1>
-        {description && <p className="text-muted mt-1 text-sm">{description}</p>}
+        {description && <p className="text-muted mt-1.5 text-sm leading-relaxed">{description}</p>}
       </div>
       {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
     </div>
