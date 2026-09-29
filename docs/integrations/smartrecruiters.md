@@ -75,7 +75,7 @@ Aislamiento por empresa y backoff estandar.
 | Detalle de la oferta | Si |
 | Formulario de postulacion | Si |
 | Envio de candidatura | Si |
-| Estado de la candidatura | Si |
+| Estado de la candidatura | No |
 | OAuth | Si |
 | API key | No |
 | Requiere navegador | No |

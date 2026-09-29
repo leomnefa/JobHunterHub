@@ -4,6 +4,7 @@ import { extname, join, normalize, resolve } from "node:path";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { WEB_DIST_DIR, config } from "./config.ts";
 import { seedAdmin } from "./db/index.ts";
+import { installFileLogger } from "./util/logger.ts";
 import { Router, handleApiRequest, sendJson } from "./http/router.ts";
 import { registerAdminRoutes } from "./routes/admin.ts";
 import { registerApplicationRoutes } from "./routes/applications.ts";
@@ -15,6 +16,9 @@ import { startScheduler, stopScheduler } from "./services/sync.ts";
 import { aiStatus } from "./services/ai.ts";
 
 /* ------------------------------ Arranque ------------------------------- */
+
+// Se instala antes que nada: corriendo como servicio no hay consola que mirar.
+const logDir = installFileLogger();
 
 const seed = seedAdmin();
 ensureSourcesRegistered();
@@ -149,6 +153,7 @@ server.listen(config.port, config.host, () => {
   console.log(`  Base datos:  ${config.dbPath}`);
   console.log(`  IA:          ${status.provider} (${status.detail})`);
   console.log(`  Sync:        cada ${config.syncIntervalMinutes} min`);
+  console.log(`  Logs:        ${logDir}`);
   if (seed.created) {
     console.log("");
     console.log(`  Usuario administrador creado: ${seed.email}`);

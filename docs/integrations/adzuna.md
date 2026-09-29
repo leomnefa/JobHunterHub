@@ -68,7 +68,7 @@ Sin credenciales el connector no ejecuta llamadas y reporta NOT_CONFIGURED en el
 | Capacidad | Soportada |
 | --- | --- |
 | Busqueda | Si |
-| Detalle de la oferta | Si |
+| Detalle de la oferta | No |
 | Formulario de postulacion | No |
 | Envio de candidatura | No |
 | Estado de la candidatura | No |

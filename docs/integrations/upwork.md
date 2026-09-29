@@ -70,7 +70,7 @@ Los errores GraphQL se devuelven como avisos de la busqueda.
 | Capacidad | Soportada |
 | --- | --- |
 | Busqueda | Si |
-| Detalle de la oferta | Si |
+| Detalle de la oferta | No |
 | Formulario de postulacion | No |
 | Envio de candidatura | No |
 | Estado de la candidatura | No |

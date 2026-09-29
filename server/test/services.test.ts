@@ -218,6 +218,17 @@ describe("registro de connectors", () => {
       if (capabilities.apply) {
         assert.equal(typeof connector.submitApplication, "function", connector.id);
       }
+      // Lo mismo para el resto de las capacidades: ninguna se declara sin el
+      // metodo que la cumple.
+      if (capabilities.applicationForm) {
+        assert.equal(typeof connector.getApplicationForm, "function", connector.id);
+      }
+      if (capabilities.applicationStatus) {
+        assert.equal(typeof connector.getApplicationStatus, "function", connector.id);
+      }
+      if (capabilities.jobDetails) {
+        assert.equal(typeof connector.getJob, "function", connector.id);
+      }
       // Las fuentes que exigen credenciales no pueden darse por configuradas.
       if (connector.settingsSchema.some((field) => field.required)) {
         assert.equal(connector.isConfigured({}), false, connector.id);

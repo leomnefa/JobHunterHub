@@ -81,7 +81,9 @@ const APPLY_CAPS = capabilities({
   resumeUpload: true,
   coverLetterUpload: true,
   customQuestions: true,
-  applicationStatus: true,
+  // El seguimiento del estado existe en la API de SmartRecruiters pero todavia
+  // no esta implementado aca: no se declara una capacidad que no se cumple.
+  applicationStatus: false,
 });
 
 function buildDescription(posting: SmartRecruitersPosting): string {

@@ -59,7 +59,9 @@ interface UpworkResponse {
   errors?: { message: string }[];
 }
 
-const CAPS = capabilities({ search: true, jobDetails: true, oauth: true });
+// La query de marketplace ya trae la descripcion completa; no se implementa un
+// getJob por id, asi que la capacidad no se declara.
+const CAPS = capabilities({ search: true, oauth: true });
 
 function toNumber(value?: string): number | undefined {
   if (!value) return undefined;

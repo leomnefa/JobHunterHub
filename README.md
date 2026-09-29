@@ -25,6 +25,16 @@ npm run setup     # verifica Node, crea .env, instala y compila la interfaz
 npm start         # inicia la aplicacion en http://127.0.0.1:4100
 ```
 
+### Dejarlo corriendo siempre (servicio de Windows)
+
+Clic derecho en **`instalar-servicio.bat`** → **Ejecutar como administrador**.
+
+Queda arrancando solo al encender el equipo, sin necesidad de iniciar sesión, y
+se reintenta si el proceso se cae. Se administra con `servicio.bat`
+(`status`, `start`, `stop`, `restart`, `logs`).
+
+Detalle completo en [`docs/SERVICIO.md`](docs/SERVICIO.md).
+
 ### Desarrollo
 
 ```bash
@@ -189,6 +199,16 @@ panel ADMIN, donde quedan cifradas en la base local.
 | `node scripts/generate-docs.mjs` | Regenera `docs/integrations/` desde el codigo |
 
 ---
+
+## Documentación
+
+| Documento | Para qué |
+| --- | --- |
+| [`docs/SERVICIO.md`](docs/SERVICIO.md) | Instalación como servicio, logs, backup, actualización |
+| [`docs/CHECKLIST-CONECTORES.md`](docs/CHECKLIST-CONECTORES.md) | Qué falta para conectar cada una de las 20 plataformas |
+| [`docs/POSTULACION-AUTOMATICA.md`](docs/POSTULACION-AUTOMATICA.md) | Qué se puede automatizar hoy y qué falta para el envío con un clic |
+| [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) | Cómo está construida y cómo agregar fuentes |
+| [`docs/integrations/`](docs/integrations/README.md) | Ficha técnica de cada fuente |
 
 ## Licencia y uso
 

@@ -50,7 +50,9 @@ interface AdzunaResponse {
   results?: AdzunaResult[];
 }
 
-const CAPS = capabilities({ search: true, jobDetails: true, apiKey: true });
+// Adzuna no expone un endpoint de detalle por id: la descripcion completa ya
+// viene dentro de la respuesta de busqueda, asi que no hay getJob que declarar.
+const CAPS = capabilities({ search: true, apiKey: true });
 
 function mapJob(job: AdzunaResult, country: string): NormalizedJob {
   const description = stripHtml(job.description ?? "");
